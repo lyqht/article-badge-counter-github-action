@@ -1,0 +1,25 @@
+{
+  "name": "article-count-workflow",
+  "version": "1.0.0",
+  "description": "This github action workflow helps you to create a badge like this",
+  "main": "articleCount.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lyqht/article-count-workflow.git"
+  },
+  "keywords": [
+    "github-action"
+  ],
+  "author": "Estee Tey",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/lyqht/article-count-workflow/issues"
+  },
+  "homepage": "https://github.com/lyqht/article-count-workflow#readme",
+  "dependencies": {
+    "@actions/core": "^1.6.0"
+  }
+}
