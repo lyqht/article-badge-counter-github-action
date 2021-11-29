@@ -32,7 +32,7 @@ runs:
     uses: actions/checkout@v2
   - name: Running Gautam's Blog post workflow 
     uses: gautamkrishnar/blog-post-workflow@master
-    id: blog-post-workflow
+    id: blogpost_workflow
     with:
       comment_tag_name: ${{inputs.comment_tag_name}}
       commit_message: "Updated Badge with latest number of articles"
@@ -43,7 +43,7 @@ runs:
     uses: actions/setup-node@v2
     with:
       node-version: '14'
-      articles: ${{fromJson(steps.blog-post-workflow.outputs.results)}}
+      articles: ${{fromJson(steps.blogpost_workflow.outputs.results)}}
       redirect_link: ${{inputs.redirect_link}}
   - name: Set up 
     shell: bash
