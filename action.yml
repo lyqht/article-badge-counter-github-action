@@ -28,24 +28,26 @@ inputs:
 runs:
   using: composite
   steps:
-      - name: Running Gautam's Blog post workflow 
-        uses: gautamkrishnar/blog-post-workflow@master
-        id: blog-post-workflow
-        with:
-          comment_tag_name: ${{inputs.comment_tag_name}}
-          commit_message: "Updated Badge with latest number of articles"
-          feed_list: ${{inputs.feed_list}}
-          max_post_count: 1000000
-          output_only: true
-      - name: Counting articles
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'
-          articles: ${{fromJson(steps.blog-post-workflow.outputs.results)}}
-          redirect_link: ${{inputs.redirect_link}}
-        run: 
-          npm install
-          node articleCount.js
+  - name: Running Gautam's Blog post workflow 
+    uses: gautamkrishnar/blog-post-workflow@master
+    id: blog-post-workflow
+    with:
+      comment_tag_name: ${{inputs.comment_tag_name}}
+      commit_message: "Updated Badge with latest number of articles"
+      feed_list: ${{inputs.feed_list}}
+      max_post_count: 1000000
+      output_only: true
+  - name: Counting articles
+    uses: actions/setup-node@v2
+    with:
+      node-version: '14'
+      articles: ${{fromJson(steps.blog-post-workflow.outputs.results)}}
+      redirect_link: ${{inputs.redirect_link}}
+    shell: bash
+    run: |
+      npm install
+      node articleCount.js
+      
         
       
 branding:
