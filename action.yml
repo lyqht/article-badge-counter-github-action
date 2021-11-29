@@ -28,6 +28,8 @@ inputs:
 runs:
   using: composite
   steps:
+  - name: Checkout
+    uses: actions/checkout@v2
   - name: Running Gautam's Blog post workflow 
     uses: gautamkrishnar/blog-post-workflow@master
     id: blog-post-workflow
@@ -43,6 +45,7 @@ runs:
       node-version: '14'
       articles: ${{fromJson(steps.blog-post-workflow.outputs.results)}}
       redirect_link: ${{inputs.redirect_link}}
+  - name: Set up 
     shell: bash
     run: |
       npm install
