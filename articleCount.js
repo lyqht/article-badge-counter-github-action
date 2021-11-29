@@ -1,7 +1,9 @@
 const fs = require('fs')
 const core = require('@actions/core');
 const redirectLink = core.getInput('redirect_link')
-const num_articles = core.getInput('articles')
+const articles = core.getInput('articles')
+console.log(`${articles}`)
+const num_articles = JSON.parse(articles).length
 const readmeData = fs.readFileSync(core.getInput('readme_path'), 'utf8');
 
 const buildUpdatedReadme = (prevContent) => {

@@ -46,7 +46,7 @@ runs:
   - name: Set up 
     shell: bash
     env:
-      articles: ${{fromJSON(steps.blogpost_workflow.outputs.results)}}
+      articles: ${{steps.blogpost_workflow.outputs.results}}
       redirect_link: ${{inputs.redirect_link}}
     run: |
       npm install
