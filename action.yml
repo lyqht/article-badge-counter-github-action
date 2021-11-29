@@ -43,7 +43,7 @@ runs:
     uses: actions/setup-node@v2
     with:
       node-version: '14'
-      articles: ${{fromJson(steps.blogpost_workflow.outputs.results)}}
+      articles: ${{fromJSON(steps.blogpost_workflow.outputs.results)}}
       redirect_link: ${{inputs.redirect_link}}
   - name: Set up 
     shell: bash
