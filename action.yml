@@ -49,8 +49,7 @@ runs:
       articles: ${{steps.blogpost_workflow.outputs.results}}
       redirect_link: ${{inputs.redirect_link}}
     run: |
-      npm install
-      node articleCount.js
+      cd ${{github.action_path}} && npm install && node articleCount.js
       
         
       
