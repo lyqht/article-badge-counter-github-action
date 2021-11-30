@@ -16,8 +16,8 @@ inputs:
     default: ""
     required: true
   readme_path:
-    description: 'Comma separated paths of the readme files you want to update'
-    default: './README.md'
+    description: 'Path of the readme file you want to update'
+    default: 'README.md'
     required: false
   comment_tag_name:
     description: "Override the default comment tag name, if you want to show multiple instances of the action on the same repo"
@@ -30,6 +30,9 @@ runs:
   steps:
   - name: Checkout
     uses: actions/checkout@v2
+  - name: Install jq
+    shell: bash
+    run: sudo apt install -y jq
   - name: Running Gautam's Blog post workflow 
     uses: gautamkrishnar/blog-post-workflow@master
     id: blogpost_workflow
@@ -39,16 +42,22 @@ runs:
       feed_list: ${{inputs.feed_list}}
       max_post_count: 1000000
       output_only: true
-  - name: Counting articles
+  - name: Saves count as an output
+    shell: bash
+    id: count-step
+    run: echo "::set-output name=articles_length::$(jq '. | length' /tmp/blog_post_workflow_output.json)"
+  - name: Set up node
     uses: actions/setup-node@v2
     with:
       node-version: '14'
-  - name: Set up 
+  - name: Generate Badge
     shell: bash
     env:
-      articles: ${{steps.blogpost_workflow.outputs.results}}
+      articles_length: ${{ fromJSON(steps.count-step.outputs.articles_length) }}      
       redirect_link: ${{inputs.redirect_link}}
+      user_repo_folder: ${{github.workspace}}
     run: |
+      env
       cd ${{github.action_path}} && npm install && node articleCount.js
       
         

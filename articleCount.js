@@ -1,11 +1,19 @@
 const fs = require('fs')
 const core = require('@actions/core');
+const path = require('path')
 const redirectLink = core.getInput('redirect_link')
-const articles = core.getInput('articles')
-const num_articles = articles.length
-console.log(typeof articles )
-console.log({num_articles})
-const readmeData = fs.readFileSync(core.getInput('readme_path'), 'utf8');
+const num_articles = core.getInput('articles_length')
+const userRepoPath = core.getInput('user_repo_path')
+const readme_path = core.getInput('readme_path')
+
+fs.readdirSync(userRepoPath).forEach(file => {
+  console.log(file);
+});
+
+console.log('Article count action running in directory: ' + process.cwd());
+const readme_abs_path = path.resolve(userRepoPath, readme_path)
+console.log({readme_abs_path})
+const readmeData = fs.readFileSync(readme_abs_path, 'utf8');
 
 const buildUpdatedReadme = (prevContent) => {
     // code reused from 
