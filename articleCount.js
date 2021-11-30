@@ -2,8 +2,9 @@ const fs = require('fs')
 const core = require('@actions/core');
 const redirectLink = core.getInput('redirect_link')
 const articles = core.getInput('articles')
-console.log(`${articles}`)
-const num_articles = JSON.parse(articles).length
+const num_articles = articles.length
+console.log(typeof articles )
+console.log({num_articles})
 const readmeData = fs.readFileSync(core.getInput('readme_path'), 'utf8');
 
 const buildUpdatedReadme = (prevContent) => {
@@ -36,7 +37,8 @@ const buildUpdatedReadme = (prevContent) => {
         process.exit(1);
     }
 
-    const newContent = `[![Website](https://img.shields.io/website?label=technical%20blog📝&up_color=%23abcbca&up_message=${num_articles}%20articles&url=https%3A%2F%2Festeetey.dev)](${redirectLink})`
+    const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev'
+    const newContent = `[![Website](https://img.shields.io/website?label=technical%20blog📝&up_color=%23abcbca&up_message=${num_articles}%20articles&url=${encodedURI})](${redirectLink})`
 
     return [
         previousContent.slice(0, endOfOpeningTagIndex + closingTag.length),
@@ -47,5 +49,6 @@ const buildUpdatedReadme = (prevContent) => {
     ].join('');
 };
 
-const readmeData = fs.readFileSync(README_FILE_PATH, 'utf8');
-core.setOutput('updated_file', buildUpdatedReadme(readmeData))
+const newReadme = buildUpdatedReadme(readmeData);
+
+fs.writeFileSync(README_FILE_PATH, newReadme);
