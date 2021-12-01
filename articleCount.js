@@ -13,8 +13,9 @@ const buildUpdatedReadme = (prevContent) => {
     // code reused from 
     // https://github.com/gautamkrishnar/blog-post-workflow/blob/eea5d3ccc163c20d69adcbb0b6ca38dbcb532abd/blog-post-workflow.js
     const tagNameInput = core.getInput('comment_tag_name');
-    const tagToLookFor = tagNameInput ? `<!-- ${tagNameInput}:START` : `<!-- ARTICLE_BADGE:START -->`;
-    const closingTag = tagNameInput ? `<!-- ${tagNameInput}:END` : `<!-- ARTICLE_BADGE:END -->`;
+    console.log({tagNameInput})
+    const tagToLookFor = tagNameInput ? `<!-- ${tagNameInput}:` : `<!-- ARTICLE_BADGE:`;
+    const closingTag = "-->"
     const tagNewlineFlag = core.getInput('tag_post_pre_newline') === 'true';
     const startOfOpeningTagIndex = prevContent.indexOf(
         `${tagToLookFor}START`,
@@ -34,7 +35,7 @@ const buildUpdatedReadme = (prevContent) => {
     ) {
         // Exit with error if comment is not found on the readme
         core.error(
-            `Cannot find the comment tag on the readme:\n${tagToLookFor}:START -->\n${tagToLookFor}:END -->`
+            `Cannot find the comment tag on the readme:\n${tagToLookFor}START -->\n${tagToLookFor}END -->`
         );
         process.exit(1);
     }
