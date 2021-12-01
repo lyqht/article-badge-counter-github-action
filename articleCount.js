@@ -44,14 +44,14 @@ const buildUpdatedReadme = (prevContent) => {
     const newContent = `[![Website](https://img.shields.io/website?label=technical%20blog📝&up_color=%23abcbca&up_message=${num_articles}%20articles&url=${encodedURI})](${redirectLink})`
 
     return [
-        previousContent.slice(0, endOfOpeningTagIndex + closingTag.length),
+        prevContent.slice(0, endOfOpeningTagIndex + closingTag.length),
         tagNewlineFlag ? '\n' : '',
         newContent,
         tagNewlineFlag ? '\n' : '',
-        previousContent.slice(startOfClosingTagIndex),
+        prevContent.slice(startOfClosingTagIndex),
     ].join('');
 };
 
 const newReadme = buildUpdatedReadme(readmeData);
 
-fs.writeFileSync(README_FILE_PATH, newReadme);
+fs.writeFileSync(readme_abs_path, newReadme);
