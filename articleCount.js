@@ -42,8 +42,8 @@ const buildUpdatedReadme = (prevContent) => {
 
     const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev'
     const newContent = redirectLink
-        ? `[![Website](https://img.shields.io/website?label=technical%20blog📝&up_color=%23abcbca&up_message=${num_articles}%20articles&url=${encodedURI})](${redirectLink})`
-        : `![Website](https://img.shields.io/website?label=technical%20blog📝&up_color=%23abcbca&up_message=${num_articles}%20articles&url=${encodedURI})`
+        ? `<a href=""><img alt="Website" src="https://img.shields.io/website?label=technical%20blog📝&up_message=${num_articles}%20articles&url=${encodedURI}"></img></a>`
+        : `<img alt="Website" src="https://img.shields.io/website?label=technical%20blog📝&up_message=${num_articles}%20articles&url=${encodedURI}"></img>`
 
     return [
         prevContent.slice(0, endOfOpeningTagIndex + closingTag.length),
