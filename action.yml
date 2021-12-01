@@ -30,9 +30,6 @@ runs:
   steps:
   - name: Checkout
     uses: actions/checkout@v2
-  - name: Install jq
-    shell: bash
-    run: sudo apt install -y jq
   - name: Running Gautam's Blog post workflow 
     uses: gautamkrishnar/blog-post-workflow@master
     id: blogpost_workflow
@@ -55,9 +52,8 @@ runs:
     env:
       articles_length: ${{ fromJSON(steps.count-step.outputs.articles_length) }}      
       redirect_link: ${{inputs.redirect_link}}
-      user_repo_folder: ${{github.workspace}}
+      readme_path: ${{inputs.readme_path}}
     run: |
-      env
       cd ${{github.action_path}} && npm install && node articleCount.js
       
         
