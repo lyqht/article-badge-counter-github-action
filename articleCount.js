@@ -1,9 +1,9 @@
 const fs = require('fs')
 const core = require('@actions/core');
 const path = require('path')
-const redirectLink = core.getInput('redirect_link')
-const num_articles = core.getInput('articles_length')
-const readme_path = core.getInput('readme_path')
+const redirectLink = process.env.redirect_link
+const num_articles = process.env.articles_length
+const readme_path = process.env.readme_path
 const readme_abs_path = path.join(process.env.GITHUB_WORKSPACE, readme_path)
 console.log({num_articles, readme_path, readme_abs_path})
 
