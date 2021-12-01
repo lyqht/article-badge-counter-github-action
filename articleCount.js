@@ -3,8 +3,9 @@ const core = require('@actions/core');
 const path = require('path')
 const redirectLink = core.getInput('redirect_link')
 const num_articles = core.getInput('articles_length')
-const readme_abs_path = path.join(process.env.GITHUB_WORKSPACE, core.getInput('readme_path'))
-console.log(`Readme abs path: ${readme_abs_path}`)
+const readme_path = core.getInput('readme_path')
+const readme_abs_path = path.join(process.env.GITHUB_WORKSPACE, readme_path)
+console.log({num_articles, readme_path, readme_abs_path})
 
 const readmeData = fs.readFileSync(readme_abs_path, 'utf8');
 
