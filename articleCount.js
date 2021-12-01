@@ -5,7 +5,7 @@ const redirectLink = process.env.redirect_link
 const num_articles = process.env.articles_length
 const readme_path = process.env.readme_path
 const readme_abs_path = path.join(process.env.GITHUB_WORKSPACE, readme_path)
-console.log({num_articles, readme_path, readme_abs_path})
+console.log({ num_articles, readme_path, readme_abs_path })
 
 const readmeData = fs.readFileSync(readme_abs_path, 'utf8');
 
@@ -13,7 +13,7 @@ const buildUpdatedReadme = (prevContent) => {
     // code reused from 
     // https://github.com/gautamkrishnar/blog-post-workflow/blob/eea5d3ccc163c20d69adcbb0b6ca38dbcb532abd/blog-post-workflow.js
     const tagNameInput = core.getInput('comment_tag_name');
-    console.log({tagNameInput})
+    console.log({ tagNameInput })
     const tagToLookFor = tagNameInput ? `<!-- ${tagNameInput}:` : `<!-- ARTICLE_BADGE:`;
     const closingTag = "-->"
     const tagNewlineFlag = core.getInput('tag_post_pre_newline') === 'true';
