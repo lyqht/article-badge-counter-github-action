@@ -1,13 +1,31 @@
 const fs = require('fs')
 const core = require('@actions/core');
 const path = require('path')
+const { makeBadge } = require('badge-maker')
+
 const redirectLink = process.env.redirect_link
 const num_articles = process.env.articles_length
 const readme_path = process.env.readme_path
 const readme_abs_path = path.join(process.env.GITHUB_WORKSPACE, readme_path)
-console.log({ num_articles, readme_path, readme_abs_path })
-
 const readmeData = fs.readFileSync(readme_abs_path, 'utf8');
+
+const createBadge = () => {
+    //TODO: update these to get from action inputs
+    const label = 'technical blog'
+    const message_suffix = '%20articles'
+    const color = 'green'
+    const style = 'flat-square'
+
+    const message = `${num_articles}${message_suffix}`
+    const format = {
+        label,
+        message,
+        color,
+        style
+    }
+    const svg = makeBadge(format)
+    return svg
+}
 
 const buildUpdatedReadme = (prevContent) => {
     // code reused from 
@@ -40,10 +58,10 @@ const buildUpdatedReadme = (prevContent) => {
         process.exit(1);
     }
 
-    const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev'
+    const badgeSVG = createBadge()
     const newContent = redirectLink
-        ? `<a href=""><img alt="Website" src="https://img.shields.io/website?label=technical%20blog📝&up_message=${num_articles}%20articles&url=${encodedURI}"></img></a>`
-        : `<img alt="Website" src="https://img.shields.io/website?label=technical%20blog📝&up_message=${num_articles}%20articles&url=${encodedURI}"></img>`
+        ? `<a href="${redirectLink}">${badgeSVG}</a>`
+        : `${badgeSVG}`
 
     return [
         prevContent.slice(0, endOfOpeningTagIndex + closingTag.length),
@@ -55,5 +73,4 @@ const buildUpdatedReadme = (prevContent) => {
 };
 
 const newReadme = buildUpdatedReadme(readmeData);
-
 fs.writeFileSync(readme_abs_path, newReadme);

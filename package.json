@@ -20,6 +20,7 @@
   },
   "homepage": "https://github.com/lyqht/article-count-workflow#readme",
   "dependencies": {
-    "@actions/core": "^1.6.0"
+    "@actions/core": "^1.6.0",
+    "badge-maker": "^3.3.1"
   }
 }
