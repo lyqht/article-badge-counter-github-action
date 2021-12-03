@@ -29,7 +29,7 @@ const createBadge = () => {
 
     const badgeImgElement = `<img alt="Website" src="https://img.shields.io/website?${endpointQuery}"></img>`
     const badge = redirectLink
-        ? `<a href="${redirectLink}">${badgeImgElement}</a>`
+        ? `<a href="${redirectLink}" target="_blank" rel="noopener noreferrer">${badgeImgElement}</a>`
         : badgeImgElement
 
     return badge
