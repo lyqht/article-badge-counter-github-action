@@ -21,6 +21,10 @@ inputs:
     description: "Override the default comment tag name, if you want to show multiple instances of the action on the same repo"
     default: ARTICLE_BADGE
     required: false
+  tag_post_pre_newline:
+    description: "To append with newline or not"
+    default: "false"
+    required: false
   badge_style:
     description: "Style of badge to be applied, refer to Shields.io website for the styles they offer"
     default: 'flat-square'
@@ -47,8 +51,6 @@ runs:
     uses: gautamkrishnar/blog-post-workflow@master
     id: blogpost_workflow
     with:
-      comment_tag_name: ${{inputs.comment_tag_name}}
-      commit_message: "Updated Badge with latest number of articles"
       feed_list: ${{inputs.feed_list}}
       max_post_count: 1000000
       output_only: true
@@ -63,9 +65,14 @@ runs:
   - name: Generate Badge
     shell: bash
     env:
-      articles_length: ${{ fromJSON(steps.count-step.outputs.articles_length) }}      
+      articles_length: ${{ fromJSON(steps.count-step.outputs.articles_length) }}
       redirect_link: ${{inputs.redirect_link}}
+      comment_tag_name: ${{inputs.comment_tag_name}}
       readme_path: ${{inputs.readme_path}}
+      badge_style: ${{inputs.badge_style}}
+      badge_label: ${{inputs.badge_label}}
+      badge_message_bg_color: ${{inputs.badge_message_bg_color}}
+      badge_message_suffix: ${{inputs.badge_message_suffix}}
     run: |
       cd ${{github.action_path}} && npm install && node articleCount.js
   - uses: stefanzweifel/git-auto-commit-action@v4
@@ -74,8 +81,6 @@ runs:
       commit_user_name: Article Count Badge Generator Action # defaults to "GitHub Actions"
       commit_user_email: hehe@lyqht.github.io # defaults to "actions@github.com"
       commit_author: Github Action Bot <actions@github.com> # defaults to author of the commit that triggered the run
-      
-        
       
 branding:
   icon: 'activity'

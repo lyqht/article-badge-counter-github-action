@@ -3,14 +3,14 @@ const core = require('@actions/core');
 const path = require('path')
 
 const createBadge = () => {
-    const style = core.getInput('badge_style')
-    const label = core.getInput('badge_label')
-    const message_bg_color = core.getInput('badge_message_bg_color')
-    const message_suffix = core.getInput('badge_message_suffix')
+    const style = process.env.badge_style
+    const label = process.env.badge_label
+    const message_bg_color = process.env.badge_message_bg_color
+    const message_suffix = process.env.badge_message_suffix
     const num_articles = process.env.articles_length
     const message = `${num_articles} ${message_suffix}`
     
-    const redirectLink = core.getInput("redirect_link")
+    const redirectLink = process.env.redirect_link
     const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev' // need a valid query url even if user does not give a redirect link
 
     const badgeImgElement = `<img alt="Website" src="https://img.shields.io/website?label=${label}&up_message=${message}&url=${encodedURI}&style=${style}&up_color=${message_bg_color}"></img>`
@@ -24,10 +24,10 @@ const createBadge = () => {
 const buildUpdatedReadme = (prevContent) => {
     // code reused from 
     // https://github.com/gautamkrishnar/blog-post-workflow/blob/eea5d3ccc163c20d69adcbb0b6ca38dbcb532abd/blog-post-workflow.js
-    const tagNameInput = core.getInput('comment_tag_name');
+    const tagNameInput = process.env.comment_tag_name;
     const tagToLookFor = tagNameInput ? `<!-- ${tagNameInput}:` : `<!-- ARTICLE_BADGE:`;
     const closingTag = "-->"
-    const tagNewlineFlag = core.getInput('tag_post_pre_newline') === 'true';
+    const tagNewlineFlag = process.env.tag_post_pre_newline;
     const startOfOpeningTagIndex = prevContent.indexOf(
         `${tagToLookFor}START`,
     );
