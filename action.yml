@@ -1,8 +1,11 @@
 name: 'Article Count Workflow'
 author: 'Estee Tey'
-description: 'Allows you to show the number of articles that you have published on your github profile'
+description: 'Allows you to show the number of articles that you have published on your profile'
 
 inputs:
+  feed_list:
+    description: "Comma separated list of RSS feed urls"
+    required: true
   gh_token:
     description: "GitHub access token with Repo scope"
     required: false
@@ -10,9 +13,6 @@ inputs:
   redirect_link:
     description: "Link to redirect user when they click on the badge. If not provided, the badge will not be a clickable."
     required: false
-  feed_list:
-    description: "Comma separated list of RSS feed urls"
-    required: true
   readme_path:
     description: "Path of the readme file you want to update"
     default: README.md
@@ -37,8 +37,6 @@ inputs:
     description: "Text to be appended as suffix to the right side of the badge (message). For example, a suffix of 'pieces' will result in a message showing '20 pieces'"
     default: articles
     required: false
-
-
 
 runs:
   using: composite
