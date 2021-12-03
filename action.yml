@@ -29,17 +29,21 @@ inputs:
     description: "Style of badge to be applied, refer to Shields.io website for the styles they offer"
     default: 'flat-square'
     required: false
-  badge_message_bg_color:
-    description: "Background color of the right side of the badge (message). Accepts colors like 'green', hex values like '#F9D3C6'"
-    default: "green"
-    required: false
   badge_label:
     description: "Text to be shown on the left side of the badge (label)"
     default: blog
     required: false
+  badge_logo:
+    description: "Logo to be shown on the left side of the badge (label)"
+    default: ""
+    required: false
   badge_message_suffix:
     description: "Text to be appended as suffix to the right side of the badge (message). For example, a suffix of 'pieces' will result in a message showing '20 pieces'"
     default: articles
+    required: false
+  badge_message_bg_color:
+    description: "Background color of the right side of the badge (message). Accepts colors like 'green', hex values like '#F9D3C6'"
+    default: "green"
     required: false
 
 runs:
@@ -71,6 +75,7 @@ runs:
       readme_path: ${{inputs.readme_path}}
       badge_style: ${{inputs.badge_style}}
       badge_label: ${{inputs.badge_label}}
+      badge_logo: ${{inputs.badge_logo}}
       badge_message_bg_color: ${{inputs.badge_message_bg_color}}
       badge_message_suffix: ${{inputs.badge_message_suffix}}
     run: |

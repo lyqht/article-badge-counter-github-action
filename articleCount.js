@@ -9,6 +9,7 @@ const formatColorString = (colorInput) => {
 const createBadge = () => {
     const style = process.env.badge_style
     const label = process.env.badge_label
+    const logo = process.env.badge_logo
     const message_bg_color = formatColorString(process.env.badge_message_bg_color)
     const message_suffix = process.env.badge_message_suffix
     const num_articles = process.env.articles_length
@@ -16,8 +17,17 @@ const createBadge = () => {
     
     const redirectLink = process.env.redirect_link
     const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev' // need a valid query url even if user does not give a redirect link
+    
+    const endpointQuery = [
+        `label=${label}`,
+        `up_message=${message}`,
+        `url=${encodedURI}`,
+        `style=${style}`,
+        `up_color=${message_bg_color}`,
+        logo ? `logo=${logo}` : ''
+    ].join('&')
 
-    const badgeImgElement = `<img alt="Website" src="https://img.shields.io/website?label=${label}&up_message=${message}&url=${encodedURI}&style=${style}&up_color=${message_bg_color}"></img>`
+    const badgeImgElement = `<img alt="Website" src="https://img.shields.io/website?${endpointQuery}"></img>`
     const badge = redirectLink
         ? `<a href="${redirectLink}">${badgeImgElement}</a>`
         : badgeImgElement
