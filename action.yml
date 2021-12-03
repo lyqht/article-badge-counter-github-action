@@ -30,7 +30,7 @@ inputs:
     default: 'flat-square'
     required: false
   badge_message_bg_color:
-    description: "Background color of the right side of the badge (message)"
+    description: "Background color of the right side of the badge (message). Accepts colors like 'green', hex values like '#F9D3C6'"
     default: "green"
     required: false
   badge_label:

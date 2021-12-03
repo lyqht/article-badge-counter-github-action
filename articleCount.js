@@ -2,10 +2,14 @@ const fs = require('fs')
 const core = require('@actions/core');
 const path = require('path')
 
+const formatColorString = (colorInput) => {
+    return colorInput.replace("#", "%23")
+}
+
 const createBadge = () => {
     const style = process.env.badge_style
     const label = process.env.badge_label
-    const message_bg_color = process.env.badge_message_bg_color
+    const message_bg_color = formatColorString(process.env.badge_message_bg_color)
     const message_suffix = process.env.badge_message_suffix
     const num_articles = process.env.articles_length
     const message = `${num_articles} ${message_suffix}`
