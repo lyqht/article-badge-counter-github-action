@@ -1,13 +1,29 @@
 const fs = require('fs')
 const core = require('@actions/core');
 const path = require('path')
-const redirectLink = process.env.redirect_link
+
+const redirectLink = core.getInput("redirect_link")
 const num_articles = process.env.articles_length
 const readme_path = process.env.readme_path
 const readme_abs_path = path.join(process.env.GITHUB_WORKSPACE, readme_path)
-console.log({ num_articles, readme_path, readme_abs_path })
-
 const readmeData = fs.readFileSync(readme_abs_path, 'utf8');
+
+const createBadge = () => {
+    const style = core.getInput('badge_style')
+    const message_bg_color = core.getInput('badge_message_bg_color')
+
+    const label = core.getInput('badge_label')
+    const message_suffix = core.getInput('badge_message_suffix')
+    const message = `${num_articles} ${message_suffix}`
+
+    const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev' // need a valid query url even if user does not give a redirect link
+    const badgeImgElement = `<img alt="Website" src="https://img.shields.io/website?label=${label}&up_message=${message}&url=${encodedURI}&style=${style}&up_color=${message_bg_color}"></img>`
+    const badge = redirectLink
+        ? `<a href="${redirectLink}">${badgeImgElement}</a>`
+        : badgeImgElement
+
+    return badge
+}
 
 const buildUpdatedReadme = (prevContent) => {
     // code reused from 
@@ -40,20 +56,14 @@ const buildUpdatedReadme = (prevContent) => {
         process.exit(1);
     }
 
-    const encodedURI = redirectLink ? encodeURI(redirectLink) : 'https%3A%2F%2Festeetey.dev'
-    const newContent = redirectLink
-        ? `<a href=""><img alt="Website" src="https://img.shields.io/website?label=technical%20blog📝&up_message=${num_articles}%20articles&url=${encodedURI}"></img></a>`
-        : `<img alt="Website" src="https://img.shields.io/website?label=technical%20blog📝&up_message=${num_articles}%20articles&url=${encodedURI}"></img>`
-
     return [
         prevContent.slice(0, endOfOpeningTagIndex + closingTag.length),
         tagNewlineFlag ? '\n' : '',
-        newContent,
+        createBadge(),
         tagNewlineFlag ? '\n' : '',
         prevContent.slice(startOfClosingTagIndex),
     ].join('');
 };
 
 const newReadme = buildUpdatedReadme(readmeData);
-
 fs.writeFileSync(readme_abs_path, newReadme);

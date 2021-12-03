@@ -4,25 +4,40 @@ description: 'Allows you to show the number of articles that you have published 
 
 inputs:
   gh_token:
-    description: 'GitHub access token with Repo scope'
+    description: "GitHub access token with Repo scope"
     required: false
     default: ${{ github.token }}
   redirect_link:
-    description: 'Link to redirect user when they click on the badge'
-    default: ''
+    description: "Link to redirect user when they click on the badge. If not provided, the badge will not be a clickable."
     required: false
   feed_list:
     description: "Comma separated list of RSS feed urls"
-    default: ""
     required: true
   readme_path:
-    description: 'Path of the readme file you want to update'
-    default: 'README.md'
+    description: "Path of the readme file you want to update"
+    default: README.md
     required: false
   comment_tag_name:
     description: "Override the default comment tag name, if you want to show multiple instances of the action on the same repo"
-    default: 'ARTICLE_BADGE'
+    default: ARTICLE_BADGE
     required: false
+  badge_style:
+    description: "Style of badge to be applied, refer to Shields.io website for the styles they offer"
+    default: 'flat-square'
+    required: false
+  badge_message_bg_color:
+    description: "Background color of the right side of the badge (message)"
+    default: "green"
+    required: false
+  badge_label:
+    description: "Text to be shown on the left side of the badge (label)"
+    default: blog
+    required: false
+  badge_message_suffix:
+    description: "Text to be appended as suffix to the right side of the badge (message). For example, a suffix of 'pieces' will result in a message showing '20 pieces'"
+    default: articles
+    required: false
+
 
 
 runs:
